@@ -18,14 +18,11 @@
 
 
 
-Here's a quick TSQL query to show you the primary server in an always on configuration. This is helpful in writing logic which first detects if the local server is indeed the Primary server or not.
+>Here's a quick TSQL query to show you the primary server in an always on configuration. This is helpful in writing logic which first detects if the local server is indeed the Primary server or not.
 ---
 ## SQL-Logic
 ```SQL
-1
-2
-3
-4	if exists(select is_local, role_desc from sys.dm_hadr_availability_replica_states where role = 1 and role_desc = 'PRIMARY') begin
+if exists(select is_local, role_desc from sys.dm_hadr_availability_replica_states where role = 1 and role_desc = 'PRIMARY') begin
 print 'This server [' + upper(@@servername) + '] is the primary.' end
 else
 print 'This server [' + upper(@@servername) + '] is NOT the primary.'
